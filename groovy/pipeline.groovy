@@ -25,12 +25,12 @@ node {
     	// ENVIRONMENTAL VARIABLES
     	APP_SHORTLIST = []
 	List<String> APP_LONGLIST = new ArrayList<String>()
-	HOST = "http://192.168.99.100:9123"
+	HOST = "http://131.159.30.173:9123"
 	QUERY = "query={\"query\":{\"match_all\":{}}}"
 	FIELDS = "fields=id,name&"
 	List<String> PIVIO_APPS = new ArrayList<String>()
 	String encodedQuery = URLEncoder.encode(QUERY, "UTF-8");
-	String url = "http://192.168.99.100:9123//document?"+FIELDS+encodedQuery
+	String url = "http://131.159.30.173:9123//document?"+FIELDS+encodedQuery
 	
 	
 	stage("Get Pivio-Apps"){
@@ -48,7 +48,7 @@ node {
         stage("Get Apps-List"){
 		withCredentials([[
 			     $class          : 'UsernamePasswordMultiBinding',
-			     credentialsId   : '98c5d653-dbdc-4b52-81ba-50c2ac04e4f1',
+			     credentialsId   : '3e479734-15f2-4816-ba21-d3926da4e288',
 			     usernameVariable: 'CF_USERNAME',
 			     passwordVariable: 'CF_PASSWORD'
 		]]) {
@@ -126,14 +126,14 @@ node {
             		def jsonstring = "{"+basicinfo+""+additionalinfo+""+runtime+"}"
 			echo "JSONString: ${jsonstring}"
             		try {
-				callPost("http://localhost:8080/update/microservice", jsonstring)
-				callPost("http://localhost:8080/endpoint/lastUpdateOfCrawler", datestring)
+				callPost("http://131.159.30.173:8080/update/microservice", jsonstring)
+				callPost("http://131.159.30.173:8080/endpoint/lastUpdateOfCrawler", datestring)
                 	} catch(e) {
                    		// if no try and catch: jenkins prints an error "no content-type" but post request succeed
 			}
 		}
 		try {
-			callPost("http://localhost:8080/endpoint/lastUpdateOfCrawler", datestring)
+			callPost("http://131.159.30.173:8080/endpoint/lastUpdateOfCrawler", datestring)
 		} catch(e) {
 			// if no try and catch: jenkins prints an error "no content-type" but post request succeed
 		}
